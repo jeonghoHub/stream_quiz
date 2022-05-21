@@ -7,13 +7,20 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+
+import static java.util.Arrays.*;
+import static java.util.function.Function.*;
+import static java.util.stream.Collectors.toMap;
 
 public class Quiz1 {
 
     public Map<String, Integer> quiz1() throws IOException {
         List<String[]> csvLines = readCsvLines();
-
-        return new HashMap<>();
+        return csvLines.stream()
+                .map(strings -> strings[1].replaceAll("\\s", ""))
+                .flatMap(s -> stream(s.split(":")))
+                .collect(toMap(identity(), value -> 1, Integer::sum, HashMap::new));
     }
 
     public Map<String, Integer> quiz2() throws IOException {
