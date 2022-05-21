@@ -12,6 +12,7 @@ public class Quiz1 {
 
     public Map<String, Integer> quiz1() throws IOException {
         List<String[]> csvLines = readCsvLines();
+
         return new HashMap<>();
     }
 
