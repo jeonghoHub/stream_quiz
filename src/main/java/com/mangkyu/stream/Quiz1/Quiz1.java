@@ -4,6 +4,7 @@ import com.opencsv.CSVReader;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,11 @@ public class Quiz1 {
 
     public Map<String, Integer> quiz2() throws IOException {
         List<String[]> csvLines = readCsvLines();
-        return new HashMap<>();
+        return csvLines.stream()
+                .filter(s -> s[0].replaceAll("\\s","").equals("정프로"))
+                .map(strings -> strings[1].replaceAll("\\s", ""))
+                .flatMap(s -> stream(s.split(":")))
+                .collect(toMap(identity(), value -> 1, Integer::sum));
     }
 
     public int quiz3() throws IOException {
